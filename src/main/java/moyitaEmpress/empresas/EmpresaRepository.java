@@ -18,4 +18,16 @@ public class EmpresaRepository {
     public List<Empresa> getAll(){
         return empresas;
     }
+
+    public List<Empresa> buscarEmpresa(String buscado) {
+        List<Empresa> listaFiltrada =null;
+
+        for (Empresa empresa: empresas) {
+            if(empresa.nombre().startsWith(buscado)){
+                listaFiltrada.add(empresa);
+            }
+        }
+
+        return listaFiltrada;
+    }
 }

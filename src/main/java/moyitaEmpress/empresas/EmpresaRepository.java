@@ -18,4 +18,16 @@ public class EmpresaRepository {
     public List<Empresa> getAll(){
         return empresas;
     }
+
+    public Empresa delete(int id){
+        Empresa empresaRetornable = null;
+
+        for (Empresa empresa : empresas) {
+            if(empresa.id() == id){
+                empresas.remove(empresa);
+                empresaRetornable = empresa;
+            }
+        }
+        return empresaRetornable;
+    }
 }

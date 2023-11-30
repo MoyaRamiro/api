@@ -27,5 +27,10 @@ public class EmpresaController {
         return empresaService.save(e);
     }
 
+    @DeleteMapping("/{id}")
+    public Empresa delete(@PathVariable int id){
+        return empresaService.delete(id);
+    }
+
 }
 

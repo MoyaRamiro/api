@@ -21,6 +21,10 @@ public class EmpresaService {
         return empresaRepository.save(e);
     }
 
+    public Empresa delete(int id){
+        return empresaRepository.delete(id);
+    }
+
 
 
 }

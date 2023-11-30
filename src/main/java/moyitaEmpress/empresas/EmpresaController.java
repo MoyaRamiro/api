@@ -9,7 +9,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/empresas")
-
 public class EmpresaController {
 
     private final EmpresaService empresaService;
@@ -19,11 +18,12 @@ public class EmpresaController {
     }
 
     @GetMapping
-    public List<Empresa> getAll(){
+    public List<Empresa> getAll() {
         return empresaService.getAll();
     }
+
     @PostMapping
-    public Empresa save(@RequestBody Empresa e){
+    public Empresa save(@RequestBody Empresa e) {
         return empresaService.save(e);
     }
 

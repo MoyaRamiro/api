@@ -3,6 +3,8 @@ package moyitaEmpress.empresas;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Repository
@@ -16,6 +18,7 @@ public class EmpresaRepository {
     }
 
     public List<Empresa> getAll(){
+        empresas.sort(Comparator.comparing(Empresa::nombre));
         return empresas;
     }
 }

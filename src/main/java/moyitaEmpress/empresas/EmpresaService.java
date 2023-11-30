@@ -19,7 +19,6 @@ public class EmpresaService {
     }
 
     public Empresa save(Empresa e){
-        e = new Empresa(e.id(), e.nombre(), e.balance(), LocalDate.now());
         return empresaRepository.save(e);
     }
 

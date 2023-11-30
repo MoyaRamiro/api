@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.contains;
@@ -72,6 +73,10 @@ class EmpresaControllerIntegrationTest {
             mockMvc.perform(post("/empresas")
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(aEmpresaJson("Mi otra empresita", 100000.0)));
+            mockMvc.perform(post("/empresas")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(aEmpresaJson("Mi ultima empresita", 100000.0)));
+            assertThat(empresaRepository.getAll()).hasSize(3);
             assertThat(empresaRepository.getAll()).extracting(Empresa::id).doesNotHaveDuplicates();
         }
 
@@ -86,13 +91,22 @@ class EmpresaControllerIntegrationTest {
         }
 
         @Test
+        @DisplayName("save debe retornar bad request cuando se intenta crear una empresa con un nombre vacio")
+        public void saveShouldFailWhenNameIsEmpty() throws Exception {
+            mockMvc.perform(post("/empresas")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(aEmpresaJson("", 0)))
+                    .andExpect(status().isBadRequest());
+        }
+
+        @Test
         @DisplayName("save debe crear una empresa con fecha de creacion con el dia de hoy")
         public void saveShouldCreateAEmpresaWithTodayAsFechaDeCreacion() throws Exception {
             mockMvc.perform(post("/empresas")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(aEmpresaJson("Mi empresita", 99.0)))
                     .andExpect(status().isOk())
-                    .andExpect(jsonPath("$.fechaDeCreacion", equalTo(LocalDate.now())));
+                    .andExpect(jsonPath("$.fechaDeCreacion", equalTo(LocalDate.now().format(DateTimeFormatter.ISO_DATE))));
         }
 
         @Test
@@ -106,15 +120,15 @@ class EmpresaControllerIntegrationTest {
     @Nested
     @DisplayName("Cuando hay empresas creadas")
     class WithCreatedEmpresas {
-        final Empresa empresa1 = createEmpresa(0, "Una empresa");
-        final Empresa empresa2 = createEmpresa(1, "La Otra empresa");
-        final Empresa empresa3 = createEmpresa(2, "La última empresa");
+        private Empresa empresa1;
+        private Empresa empresa2;
+        private Empresa empresa3;
 
         @BeforeEach
         public void setUp() {
-            empresaRepository.save(empresa1);
-            empresaRepository.save(empresa2);
-            empresaRepository.save(empresa3);
+            empresa1 = empresaRepository.save(createEmpresa(0, "una empresa"));
+            empresa2 = empresaRepository.save(createEmpresa(1, "la otra empresa"));
+            empresa3 = empresaRepository.save(createEmpresa(2, "la última empresa"));
         }
 
         @Test
@@ -168,7 +182,7 @@ class EmpresaControllerIntegrationTest {
                     .andExpect(jsonPath("$.id", equalTo(empresa1.id())))
                     .andExpect(jsonPath("$.nombre", equalTo(empresa1.nombre())))
                     .andExpect(jsonPath("$.balance", equalTo(empresa1.balance())))
-                    .andExpect(jsonPath("$.fechaDeCreacion", equalTo(empresa1.fechaDeCreacion())));
+                    .andExpect(jsonPath("$.fechaDeCreacion", equalTo(empresa1.fechaDeCreacion().format(DateTimeFormatter.ISO_DATE))));
         }
 
         @Test
@@ -176,13 +190,15 @@ class EmpresaControllerIntegrationTest {
         public void deleteByIdShouldRemoveTheEmpresaFromRepository() throws Exception {
             mockMvc.perform(delete("/empresas/{id}", empresa3.id()));
             assertThat(empresaRepository.getAll()).noneMatch(empresa -> empresa.equals(empresa3));
+            assertThat(empresaRepository.getAll()).hasSize(2);
+
         }
 
         @Test
-        @DisplayName("delete by id debe retornar bad request si la empresa a eliminar no existe")
+        @DisplayName("delete by id debe retornar not found si la empresa a eliminar no existe")
         public void deleteByIdShouldReturnNotFoundWhenEmpresaDoesNotExists() throws Exception {
             mockMvc.perform(delete("/empresas/{id}", 99999999))
-                    .andExpect(status().isBadRequest());
+                    .andExpect(status().isNotFound());
         }
 
         @Test
@@ -193,7 +209,7 @@ class EmpresaControllerIntegrationTest {
                     .andExpect(jsonPath("$.id", equalTo(empresa2.id())))
                     .andExpect(jsonPath("$.nombre", equalTo(empresa2.nombre())))
                     .andExpect(jsonPath("$.balance", equalTo(empresa2.balance())))
-                    .andExpect(jsonPath("$.fechaDeCreacion", equalTo(empresa2.fechaDeCreacion())));
+                    .andExpect(jsonPath("$.fechaDeCreacion", equalTo(empresa2.fechaDeCreacion().format(DateTimeFormatter.ISO_DATE))));
         }
     }
 

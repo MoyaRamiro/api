@@ -2,6 +2,7 @@ package moyitaEmpress.empresas;
 
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -18,6 +19,7 @@ public class EmpresaService {
     }
 
     public Empresa save(Empresa e){
+        e = new Empresa(e.id(), e.nombre(), e.balance(), LocalDate.now());
         return empresaRepository.save(e);
     }
 

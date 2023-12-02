@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class EmpresaService {
@@ -21,4 +22,11 @@ public class EmpresaService {
     public Empresa save(Empresa e) {
         return empresaRepository.save(e);
     }
+
+    public Empresa delete(int id){
+        return empresaRepository.delete(id);
+    }
+
+
+
 }

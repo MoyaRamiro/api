@@ -19,8 +19,8 @@ public class EmpresaController {
     }
 
     @GetMapping
-    public List<Empresa> getAll() {
-        return empresaService.getAll();
+    public List<Empresa> getAll(@RequestParam(required = false) String nombreEmpiezaCon) {
+        return empresaService.getAll(nombreEmpiezaCon);
     }
 
 
@@ -34,6 +34,8 @@ public class EmpresaController {
     public ResponseEntity<Empresa> delete(@PathVariable int id){
         return ResponseEntity.ofNullable(empresaService.delete(id));
     }
+
+
 
 }
 

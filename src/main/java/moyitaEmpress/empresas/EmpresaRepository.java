@@ -33,14 +33,6 @@ public class EmpresaRepository {
     }
 
     public List<Empresa> buscarEmpresa(String buscado) {
-        List<Empresa> listaFiltrada =null;
-
-        for (Empresa empresa: empresas) {
-            if(empresa.nombre().startsWith(buscado)){
-                listaFiltrada.add(empresa);
-            }
-        }
-
-        return listaFiltrada;
+        return empresas.values().stream().filter(empresa -> empresa.nombre().startsWith(buscado)).toList();
     }
 }

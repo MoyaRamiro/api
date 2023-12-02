@@ -10,5 +10,7 @@ public record Empresa (
     LocalDate fechaDeCreacion
 
 ){
-
+    public Empresa(int id, String nombre, double balance) {
+        this(id, nombre, balance, LocalDate.now());
+    }
 }

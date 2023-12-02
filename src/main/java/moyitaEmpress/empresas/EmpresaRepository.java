@@ -31,4 +31,8 @@ public class EmpresaRepository {
     public void deleteAll() {
         empresas.clear();
     }
+
+    public List<Empresa> buscarEmpresa(String buscado) {
+        return empresas.values().stream().filter(empresa -> empresa.nombre().startsWith(buscado)).toList();
+    }
 }

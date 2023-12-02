@@ -4,7 +4,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class EmpresaService {
@@ -15,8 +14,12 @@ public class EmpresaService {
         this.empresaRepository = empresaRepository;
     }
 
-    public List<Empresa> getAll() {
-        return empresaRepository.getAll();
+    public List<Empresa> getAll(String nombreEmpiezaCon) {
+        if(nombreEmpiezaCon == null){
+            return empresaRepository.getAll();
+        }
+
+        return empresaRepository.buscarEmpresa(nombreEmpiezaCon);
     }
 
 
@@ -29,4 +32,5 @@ public class EmpresaService {
     public Empresa create(String nombre, double balance) {
         return empresaRepository.save(new Empresa(null, nombre, balance, LocalDate.now()));
     }
+
 }

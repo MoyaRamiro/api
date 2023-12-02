@@ -2,21 +2,34 @@ package moyitaEmpress.empresas;
 
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 public class EmpresaRepository {
 
-    private final List<Empresa> empresas=new ArrayList<>();
+    private static AtomicInteger lastGeneratedID = new AtomicInteger(0);
+    private final Map<Integer,Empresa> empresas = new HashMap<>();
 
-    public Empresa save(Empresa empresa){
-        empresas.add(empresa);
-        return empresa;
+    public Empresa save(Empresa empresaACrear){
+        Empresa empresaCreada = new Empresa(lastGeneratedID.getAndIncrement(), empresaACrear.nombre(), empresaACrear.balance(), empresaACrear.fechaDeCreacion());
+
+        empresas.put(empresaCreada.id(), empresaCreada);
+
+        return empresaCreada;
     }
 
     public List<Empresa> getAll(){
-        return empresas;
+        return empresas.values().stream().sorted(Comparator.comparing(Empresa::nombre)).toList();
+    }
+
+    public Empresa delete(int id){
+        return empresas.remove(id);
+    }
+
+    public void deleteAll() {
+        empresas.clear();
     }
 
     public List<Empresa> buscarEmpresa(String buscado) {

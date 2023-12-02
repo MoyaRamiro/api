@@ -1,15 +1,15 @@
 package moyitaEmpress.empresas;
 
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/empresas")
-
 public class EmpresaController {
 
     private final EmpresaService empresaService;
@@ -19,12 +19,20 @@ public class EmpresaController {
     }
 
     @GetMapping
-    public List<Empresa> getAll(){
+    public List<Empresa> getAll() {
         return empresaService.getAll();
     }
+
+
     @PostMapping
-    public Empresa save(@RequestBody Empresa e){
-        return empresaService.save(e);
+    public ResponseEntity<Empresa> save(@RequestBody @Valid EmpresaRequestBody e) {
+
+        return ResponseEntity.ok(empresaService.create(e.nombre(), e.balance()));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Empresa> delete(@PathVariable int id){
+        return ResponseEntity.ofNullable(empresaService.delete(id));
     }
 
 }

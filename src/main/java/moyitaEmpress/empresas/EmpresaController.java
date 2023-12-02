@@ -6,6 +6,7 @@ import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/empresas")
@@ -19,7 +20,7 @@ public class EmpresaController {
     }
 
     @GetMapping
-    public List<Empresa> getAll(){
+    public Map<Integer,Empresa> getAll(){
         return empresaService.getAll();
     }
     @PostMapping

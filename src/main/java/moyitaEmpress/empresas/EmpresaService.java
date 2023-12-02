@@ -3,6 +3,7 @@ package moyitaEmpress.empresas;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class EmpresaService {
@@ -13,7 +14,7 @@ public class EmpresaService {
         this.empresaRepository = empresaRepository;
     }
 
-    public List<Empresa> getAll(){
+    public Map<Integer,Empresa> getAll(){
         return empresaRepository.getAll();
     }
 

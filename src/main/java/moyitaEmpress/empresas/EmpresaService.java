@@ -33,4 +33,7 @@ public class EmpresaService {
         return empresaRepository.save(new Empresa(null, nombre, balance, LocalDate.now()));
     }
 
+    public Empresa findByID(int id) {
+        return empresaRepository.findByID(id);
+    }
 }

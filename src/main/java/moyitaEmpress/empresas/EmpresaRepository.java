@@ -35,4 +35,9 @@ public class EmpresaRepository {
     public List<Empresa> buscarEmpresa(String buscado) {
         return empresas.values().stream().filter(empresa -> empresa.nombre().startsWith(buscado)).toList();
     }
+
+
+    public Empresa findByID(int id) {
+        return empresas.get(id);
+    }
 }

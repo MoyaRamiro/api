@@ -37,7 +37,7 @@ public class EmpresaRepository {
     }
 
 
-    public Empresa findByID(int id) {
-        return empresas.get(id);
+    public Optional<Empresa> findByID(int id) {
+        return Optional.ofNullable(empresas.get(id));
     }
 }

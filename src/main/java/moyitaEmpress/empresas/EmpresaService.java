@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EmpresaService {
@@ -33,7 +34,7 @@ public class EmpresaService {
         return empresaRepository.save(new Empresa(null, nombre, balance, LocalDate.now()));
     }
 
-    public Empresa findByID(int id) {
+    public Optional<Empresa> findByID(int id) {
         return empresaRepository.findByID(id);
     }
 }

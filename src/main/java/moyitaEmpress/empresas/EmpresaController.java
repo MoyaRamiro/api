@@ -25,7 +25,7 @@ public class EmpresaController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Empresa> findByID(@PathVariable int id){
-        return ResponseEntity.ofNullable(empresaService.findByID(id));
+        return ResponseEntity.of(empresaService.findByID(id)) ;
     }
 
 

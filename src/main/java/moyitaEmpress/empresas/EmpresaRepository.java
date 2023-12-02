@@ -15,13 +15,13 @@ public class EmpresaRepository {
     private final List<Empresa> empresas=new ArrayList<>();
 
     public Empresa save(Empresa empresa){
-        empresa = new Empresa(empresa.id(), empresa.nombre(), empresa.balance(), LocalDate.now());
+        empresa = new Empresa(lastGeneratedID++, empresa.nombre(), empresa.balance(), LocalDate.now());
         empresas.add(empresa);
         return empresa;
     }
 
     public List<Empresa> getAll(){
-        return empresas.sort(Comparator.comparing(Empresa::nombre));
+        return empresas.stream().sorted(Comparator.comparing(Empresa::nombre)).toList();
     }
 
     public void deleteAll() {

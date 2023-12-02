@@ -4,6 +4,8 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Repository
@@ -19,6 +21,6 @@ public class EmpresaRepository {
     }
 
     public List<Empresa> getAll(){
-        return empresas;
+        return empresas.sort(Comparator.comparing(Empresa::nombre));
     }
 }

@@ -1,16 +1,15 @@
 package moyitaEmpress.empresas;
 
-import org.springframework.cglib.core.Local;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.lang.reflect.Array;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/empresas")
-
 public class EmpresaController {
 
     private final EmpresaService empresaService;
@@ -20,11 +19,12 @@ public class EmpresaController {
     }
 
     @GetMapping
-    public List<Empresa> getAll(){
+    public List<Empresa> getAll() {
         return empresaService.getAll();
     }
+
     @PostMapping
-    public Empresa save(@RequestBody Empresa e){
+    public Empresa save(@RequestBody Empresa e) {
         return empresaService.save(e);
     }
 

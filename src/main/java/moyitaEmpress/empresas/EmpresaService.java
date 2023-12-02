@@ -14,14 +14,11 @@ public class EmpresaService {
         this.empresaRepository = empresaRepository;
     }
 
-    public List<Empresa> getAll(){
+    public List<Empresa> getAll() {
         return empresaRepository.getAll();
     }
 
-    public Empresa save(Empresa e){
+    public Empresa save(Empresa e) {
         return empresaRepository.save(e);
     }
-
-
-
 }

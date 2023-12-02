@@ -23,4 +23,8 @@ public class EmpresaRepository {
     public List<Empresa> getAll(){
         return empresas.sort(Comparator.comparing(Empresa::nombre));
     }
+
+    public void deleteAll() {
+        empresas.clear();
+    }
 }

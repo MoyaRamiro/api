@@ -23,6 +23,11 @@ public class EmpresaController {
         return empresaService.getAll(nombreEmpiezaCon);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Empresa> findByID(@PathVariable int id){
+        return ResponseEntity.of(empresaService.findByID(id)) ;
+    }
+
 
     @PostMapping
     public ResponseEntity<Empresa> save(@RequestBody @Valid EmpresaRequestBody e) {
@@ -34,6 +39,8 @@ public class EmpresaController {
     public ResponseEntity<Empresa> delete(@PathVariable int id){
         return ResponseEntity.ofNullable(empresaService.delete(id));
     }
+
+
 
 
 

@@ -18,7 +18,6 @@ public class EmpresaRepository {
     }
 
     public List<Empresa> getAll(){
-        empresas.sort(Comparator.comparing(Empresa::nombre));
-        return empresas;
+        return empresas.sort(Comparator.comparing(Empresa::nombre));
     }
 }

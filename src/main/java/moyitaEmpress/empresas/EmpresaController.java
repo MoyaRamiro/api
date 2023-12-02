@@ -20,7 +20,7 @@ public class EmpresaController {
     }
 
     @GetMapping
-    public Map<Integer,Empresa> getAll(){
+    public List<Empresa> getAll(){
         return empresaService.getAll();
     }
     @PostMapping

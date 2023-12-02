@@ -18,8 +18,8 @@ public class EmpresaRepository {
         return empresa;
     }
 
-    public Map<Integer,Empresa> getAll(){
-        return empresas;
+    public List<Empresa> getAll(){
+        return empresas.values().stream().toList();
     }
 
     public Empresa delete(int id){

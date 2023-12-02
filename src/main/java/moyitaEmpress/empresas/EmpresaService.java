@@ -14,7 +14,7 @@ public class EmpresaService {
         this.empresaRepository = empresaRepository;
     }
 
-    public Map<Integer,Empresa> getAll(){
+    public List<Empresa> getAll(){
         return empresaRepository.getAll();
     }
 

@@ -91,6 +91,24 @@ class EmpresaControllerIntegrationTest {
         }
 
         @Test
+        @DisplayName("save debe retornar bad request cuando se intenta crear una empresa con balance negative")
+        public void saveShouldFailWhenBalanceIsNegative() throws Exception {
+            mockMvc.perform(post("/empresas")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(aEmpresaJson("q", -20)))
+                    .andExpect(status().isBadRequest());
+        }
+
+        @Test
+        @DisplayName("save debe retornar ok cuando se intenta crear una empresa con balance 0")
+        public void saveShouldNotFailWhenBalanceIs0() throws Exception {
+            mockMvc.perform(post("/empresas")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(aEmpresaJson("q", 0)))
+                    .andExpect(status().isOk());
+        }
+
+        @Test
         @DisplayName("save debe retornar bad request cuando se intenta crear una empresa con un nombre vacio")
         public void saveShouldFailWhenNameIsEmpty() throws Exception {
             mockMvc.perform(post("/empresas")
@@ -126,9 +144,9 @@ class EmpresaControllerIntegrationTest {
 
         @BeforeEach
         public void setUp() {
-            empresa1 = empresaRepository.save(createEmpresa(0, "una empresa"));
-            empresa2 = empresaRepository.save(createEmpresa(1, "la otra empresa"));
-            empresa3 = empresaRepository.save(createEmpresa(2, "la última empresa"));
+            empresa1 = empresaRepository.save(createEmpresa("una empresa"));
+            empresa2 = empresaRepository.save(createEmpresa("la otra empresa"));
+            empresa3 = empresaRepository.save(createEmpresa("la última empresa"));
         }
 
         @Test
@@ -222,7 +240,7 @@ class EmpresaControllerIntegrationTest {
                 """, nombre, balance).trim();
     }
 
-    private Empresa createEmpresa(int id, String nombre) {
-        return new Empresa(id, nombre, 0.0, LocalDate.now());
+    private Empresa createEmpresa( String nombre) {
+        return new Empresa(null, nombre, 0.0, LocalDate.now());
     }
 }

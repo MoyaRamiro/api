@@ -1,5 +1,6 @@
 package moyitaEmpress.empresas;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,9 +23,11 @@ public class EmpresaController {
         return empresaService.getAll();
     }
 
+
     @PostMapping
-    public Empresa save(@RequestBody Empresa e) {
-        return empresaService.save(e);
+    public ResponseEntity<Empresa> save(@RequestBody @Valid EmpresaRequestBody e) {
+
+        return ResponseEntity.ok(empresaService.create(e.nombre(), e.balance()));
     }
 
     @DeleteMapping("/{id}")

@@ -19,14 +19,14 @@ public class EmpresaService {
         return empresaRepository.getAll();
     }
 
-    public Empresa save(Empresa e) {
-        return empresaRepository.save(e);
-    }
+
 
     public Empresa delete(int id){
         return empresaRepository.delete(id);
     }
 
 
-
+    public Empresa create(String nombre, double balance) {
+        return empresaRepository.save(new Empresa(null, nombre, balance, LocalDate.now()));
+    }
 }

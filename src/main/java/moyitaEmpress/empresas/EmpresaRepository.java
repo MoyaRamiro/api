@@ -4,20 +4,20 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Repository
 public class EmpresaRepository {
 
-    private static int lastGeneratedID=0;
+    private static AtomicInteger lastGeneratedID = new AtomicInteger(0);
     private final Map<Integer,Empresa> empresas = new HashMap<>();
 
-    public Empresa save(Empresa empresa){
-        int idAutoIncremental = lastGeneratedID++;
+    public Empresa save(Empresa empresaACrear){
+        Empresa empresaCreada = new Empresa(lastGeneratedID.getAndIncrement(), empresaACrear.nombre(), empresaACrear.balance(), empresaACrear.fechaDeCreacion());
 
-        empresa = new Empresa(idAutoIncremental, empresa.nombre(), empresa.balance(), LocalDate.now());
-        empresas.put(idAutoIncremental, empresa);
+        empresas.put(empresaCreada.id(), empresaCreada);
 
-        return empresa;
+        return empresaCreada;
     }
 
     public List<Empresa> getAll(){
